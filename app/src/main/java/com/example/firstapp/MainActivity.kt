@@ -1,6 +1,8 @@
 package com.example.firstapp
 
 import android.app.Activity
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
@@ -20,6 +22,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
 import io.reactivex.*
@@ -64,11 +67,10 @@ class MainActivity : Activity() {
             fragmentManager.beginTransaction().add(R.id.fragment_place, f).addToBackStack("main").commitAllowingStateLoss()
     }
 
-    fun playMusic(url: String) {
-        //мб тут остановить, проверить, есть ли уже запущенный сервис
-        val i = Intent(this, PlayService::class.java)
-        i.putExtra("mp3", url)
-        startService(i)
+
+    override fun attachBaseContext(newBase: Context ) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase)
+        );
     }
 
 }
@@ -81,8 +83,7 @@ class FeedItemAPI(
     val title: String,
     val link: String,
     val thumbnail: String,
-    val description: String,
-    val guid: String                        /////
+    val description: String
 )
 
 open class Feed(
@@ -94,8 +95,7 @@ open class FeedItem(
     var title: String = "",
     var link: String = "",
     var thumbnail: String = "",
-    var description: String = "",
-    var guid: String = ""                    /////
+    var description: String = ""
 ) : RealmObject()
 
 
@@ -160,16 +160,14 @@ class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(item: FeedItem) {
         val vTitle = itemView.findViewById<TextView>(R.id.item_title)
         val vDesc = itemView.findViewById<TextView>(R.id.item_description)
-        val vThumb = itemView.findViewById<ImageView>(R.id.item_thumb)
+        val vThumb = itemView.findViewById<ImageView>(R.id.item_thumbnail)
         vTitle.text = item.title
         vDesc.text = item.description.toSpanned()
-                // Html.fromHtml(item.description)
 
         Picasso.with(vThumb.context).load(item.thumbnail).into(vThumb)
 
         itemView.setOnClickListener {
-            //(vThumb.context as MainActivity).showArticle(item.link)
-            (vThumb.context as MainActivity).playMusic(item.guid)
+            (vThumb.context as MainActivity).showArticle(item.link)
         }
     }
 }

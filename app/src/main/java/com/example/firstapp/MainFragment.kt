@@ -36,16 +36,14 @@ class MainFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) { //тут лучше всего начинать какую-либо деятельность
         super.onActivityCreated(savedInstanceState)
 
-        //https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.bbci.co.uk%2Fnews%2Frss.xml
-        //https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.twit.tv%2Fbrickhouse.xml
-        val o = createRequest("https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.twit.tv%2Fbrickhouse.xml")
+        val o = createRequest(" https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.bbci.co.uk%2Frussian%2Fnews%2Frss.xml")
             .map { Gson().fromJson(it, FeedAPI::class.java) }
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()) //выбор потока
 
         request = o.subscribe({
 
             val feed = Feed(it.items.mapTo(RealmList<FeedItem>(), { feed ->
-                FeedItem(feed.title, feed.link, feed.thumbnail, feed.description, feed.guid) //// feed.guid
+                FeedItem(feed.title, feed.link, feed.thumbnail, feed.description)
             }))
 
             Realm.getDefaultInstance().executeTransaction { realm ->
@@ -55,7 +53,6 @@ class MainFragment: Fragment() {
                         item.deleteFromRealm()
 
                 realm.copyToRealm(feed)
-                //HERE
             }
             showRecView()
 
