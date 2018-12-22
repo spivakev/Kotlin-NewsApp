@@ -13,10 +13,12 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
+
         <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/action_bar"
+                app:layout_scrollFlags="scroll|enterAlways"
         >
             <TextView
                     android:layout_height="wrap_content"
@@ -40,7 +42,9 @@
             android:id="@+id/act1_recView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="?attr/actionBarSize"
+
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
     />
 
 </android.support.design.widget.CoordinatorLayout>
