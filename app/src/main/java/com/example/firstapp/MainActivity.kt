@@ -81,6 +81,7 @@ class FeedAPI(
 
 class FeedItemAPI(
     val title: String,
+    val pubDate: String,
     val link: String,
     val thumbnail: String,
     val description: String
@@ -93,6 +94,7 @@ open class Feed(
 
 open class FeedItem(
     var title: String = "",
+    var pubDate: String = "",
     var link: String = "",
     var thumbnail: String = "",
     var description: String = ""
@@ -159,10 +161,12 @@ class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(item: FeedItem) {
         val vTitle = itemView.findViewById<TextView>(R.id.item_title)
+        val vPubDate = itemView.findViewById<TextView>(R.id.pub_date)
         val vDesc = itemView.findViewById<TextView>(R.id.item_description)
         val vThumb = itemView.findViewById<ImageView>(R.id.item_thumbnail)
         vTitle.text = item.title
         vDesc.text = item.description.toSpanned()
+        vPubDate.text = item.pubDate
 
         Picasso.with(vThumb.context).load(item.thumbnail).into(vThumb)
 
