@@ -7,7 +7,7 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="5dp"
+        card_view:cardCornerRadius="@dimen/corner_radius"
         android:layout_marginLeft="9dp"
         android:layout_marginRight="9dp"
         android:layout_marginTop="5dp"
@@ -18,9 +18,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="@dimen/card_padding"
+                android:paddingBottom="@dimen/card_padding"
                 android:textAlignment="center"
+                android:background="?attr/selectableItemBackground"
         >
 
             <TextView
@@ -35,8 +36,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingLeft="@dimen/card_padding"
+                    android:paddingRight="@dimen/card_padding"
             />
 
             <ImageView
@@ -55,43 +56,47 @@
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingLeft="@dimen/card_padding"
+                    android:paddingRight="@dimen/card_padding"
                     android:textColor="@color/title_gray"
                     />
 
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:id="@+id/pub_date"
-                          android:layout_marginLeft="10dp"
-                          android:layout_marginStart="10dp"
-                          android:paddingRight="150dp"
+                          android:textSize="14sp"
+                          android:layout_marginLeft="@dimen/card_padding"
+                          android:layout_marginStart="@dimen/card_padding"
+                          android:paddingRight="116dp"
                           android:paddingLeft="0dp"
                           android:paddingStart="0dp"
-                          android:paddingEnd="130dp"
+                          android:paddingEnd="100dp"
                           android:layout_gravity="bottom"
                           android:text="@string/pub_date"/>
 
-                <Button android:id="@+id/card_button"
+
+                <Button
+                        android:id="@+id/card_button"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_gravity="end"
+                        android:layout_gravity="bottom"
+                        android:paddingLeft="@dimen/button_padding"
+                        android:paddingRight="@dimen/button_padding"
+                        android:layout_marginRight="@dimen/card_padding"
+                        android:layout_marginEnd="@dimen/card_padding"
                         android:textColor="@color/colorAccent"
                         android:text="@string/card_button"
                         android:textSize="15sp"
                         fontPath="font/SFUIText-Bold.ttf"
                         tools:ignore="MissingPrefix"
-
-                        android:layout_marginRight="10dp"
-                        android:layout_marginEnd="10dp"
-
-                        android:background="?attr/selectableItemBackground"
-                        style="?android:attr/borderlessButtonStyle"
+                        android:background="@color/white"
+                        style="?attr/borderlessButtonStyle"
                 />
             </LinearLayout>
         </LinearLayout>
