@@ -170,6 +170,10 @@ class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         Picasso.with(vThumb.context).load(item.thumbnail).into(vThumb)
 
+        itemView.findViewById<TextView>(R.id.card_button).setOnClickListener {
+            (vThumb.context as MainActivity).showArticle(item.link)
+        }
+
         itemView.setOnClickListener {
             (vThumb.context as MainActivity).showArticle(item.link)
         }
