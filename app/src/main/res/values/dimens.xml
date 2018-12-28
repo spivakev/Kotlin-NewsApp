@@ -3,11 +3,24 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="card_height">404dp</dimen>
+   <!-- <dimen name="card_height">404dp</dimen>
     <dimen name="tile_padding">8dp</dimen>
-    <dimen name="tile_height">160dp</dimen>
+    <dimen name="tile_height">160dp</dimen>-->
     <dimen name="app_bar_height">256dp</dimen>
     <dimen name="corner_radius">5dp</dimen>
     <dimen name="card_padding">10dp</dimen>
     <dimen name="button_padding">16dp</dimen>
+    <dimen name="card_margin_horisontal">9dp</dimen>
+    <dimen name="card_margin_vertical">5dp</dimen>
+    <dimen name="main_text_size">15sp</dimen>
+    <dimen name="card_image_height_portrait">206dp</dimen>
+    <dimen name="margin_between_card_elements">8dp</dimen>
+    <dimen name="card_button_height">30dp</dimen>
+    <dimen name="card_pub_date_text_size">14sp</dimen>
+    <dimen name="pub_date_padding_right">100dp</dimen>
+    <dimen name="card_padding_land">7dp</dimen>
+    <dimen name="margin_between_card_elements_land">5dp</dimen>
+    <dimen name="pub_date_padding_right_land">60dp</dimen>
+    <dimen name="card_image_height_land">170dp</dimen>
+    <dimen name="card_button_height_land">25dp</dimen>
 </resources>
