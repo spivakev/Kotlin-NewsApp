@@ -1,7 +1,11 @@
 package com.example.firstapp
 
+import android.app.Activity
 import android.app.Fragment
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -26,14 +30,15 @@ class MainFragment: Fragment() {
         val param = arguments.getString("param")
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View { //созд view для UI и просто возвращаем его
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.activity_main, container, false)
 
         vRecView = view.findViewById<RecyclerView>(R.id.act1_recView)
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) { //тут лучше всего начинать какую-либо деятельность
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         val o = createRequest("https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Ffeeds.bbci.co.uk%2Frussian%2Fnews%2Frss.xml")
@@ -70,10 +75,21 @@ class MainFragment: Fragment() {
             val feed = realm.where(Feed::class.java).findAll()
             if (feed.size > 0) {
                 vRecView.adapter = RecAdapter(feed[0]!!.items)
-                vRecView.layoutManager = LinearLayoutManager(activity)
+
+                if (isLandscapeOrientation()) {
+                    vRecView.layoutManager = GridLayoutManager(activity, 2)
+                } else {
+                    vRecView.layoutManager = LinearLayoutManager(activity)
+                }
             }
         }
     }
+
+    fun isLandscapeOrientation() : Boolean {
+        val orientation = getResources().getConfiguration().orientation
+        return orientation == Configuration.ORIENTATION_LANDSCAPE
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

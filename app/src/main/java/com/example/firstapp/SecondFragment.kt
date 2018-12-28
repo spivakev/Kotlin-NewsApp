@@ -2,6 +2,7 @@ package com.example.firstapp
 
 import android.app.Fragment
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,11 @@ class SecondFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val vRecView = activity.findViewById<RecyclerView>(R.id.act1_recView)
+        vRecView.layoutManager = null
+        vRecView.layoutManager = LinearLayoutManager(activity)
+
+
         url = arguments.getString("url")
     }
 
@@ -23,6 +29,7 @@ class SecondFragment: Fragment() {
         val view = inflater!!.inflate(R.layout.sec_fragment, container, false)
 
         vBrowser = view.findViewById<WebView>(R.id.frag2_browser)
+
         return view
     }
 
