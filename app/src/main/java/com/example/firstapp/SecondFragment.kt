@@ -40,10 +40,15 @@ class SecondFragment: Fragment() {
     }
 
     override fun onDestroy() {
-        if (fragmentManager.backStackEntryCount == 0) {
+        if (fragmentManager.backStackEntryCount == 0 && isLandscapeOrientation()) {
             val vRecView = activity.findViewById<RecyclerView>(R.id.act1_recView)
             vRecView.layoutManager = GridLayoutManager(activity, 2)
         }
         super.onDestroy()
+    }
+
+    fun isLandscapeOrientation() : Boolean {
+        val orientation = getResources().getConfiguration().orientation
+        return orientation == Configuration.ORIENTATION_LANDSCAPE
     }
 }

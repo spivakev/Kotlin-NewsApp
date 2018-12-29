@@ -2,6 +2,7 @@ package com.example.firstapp
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -35,7 +36,7 @@ class MainActivity : Activity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (fragmentManager.backStackEntryCount == 0) {
+        if (fragmentManager.backStackEntryCount == 0 && isLandscapeOrientation(this)) {
             findViewById<View>(R.id.fragment_place2).visibility = View.GONE
         }
     }
@@ -54,11 +55,14 @@ class MainActivity : Activity() {
             fragmentManager.beginTransaction().add(R.id.fragment_place, f).addToBackStack("main").commitAllowingStateLoss()
     }
 
-
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
+    fun isLandscapeOrientation(activity: Activity): Boolean {
+        val orientation = getResources().getConfiguration().orientation
+        return orientation == Configuration.ORIENTATION_LANDSCAPE
+    }
 }
 
 class FeedAPI(
@@ -126,7 +130,6 @@ class RecAdapter(val items: RealmList<FeedItem>) : RecyclerView.Adapter<RecHolde
 
         return RecHolder(view)
     }
-
 
     override fun getItemCount(): Int {
         return items.size
