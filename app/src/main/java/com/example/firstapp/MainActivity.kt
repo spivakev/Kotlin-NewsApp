@@ -1,47 +1,28 @@
 package com.example.firstapp
 
 import android.app.Activity
-import android.app.ActivityManager
 import android.content.Context
-import android.content.Intent
-import android.content.res.Configuration
-import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.text.Spanned
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import io.github.inflationx.viewpump.ViewPumpContextWrapper
-import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.*
-import io.reactivex.*
-import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.zipWith
-import io.reactivex.schedulers.Schedulers
-import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) { //подключение библиотек
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fragment) //задает UI
+        setContentView(R.layout.activity_fragment)
 
         if (savedInstanceState == null) {
             val bundle = Bundle()
@@ -49,7 +30,6 @@ class MainActivity : Activity() {
             val f = MainFragment()
             f.arguments = bundle
             fragmentManager.beginTransaction().replace(R.id.fragment_place, f).commitAllowingStateLoss() //коммит просто потеряется, если что-то пойдет не так
-
         }
     }
 
@@ -68,9 +48,8 @@ class MainActivity : Activity() {
     }
 
 
-    override fun attachBaseContext(newBase: Context ) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase)
-        );
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
 }
@@ -141,6 +120,7 @@ class RecAdapter(val items: RealmList<FeedItem>) : RecyclerView.Adapter<RecHolde
         return RecHolder(view)
     }
 
+
     override fun getItemCount(): Int {
         return items.size
     }
@@ -166,7 +146,7 @@ class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
         val vThumb = itemView.findViewById<ImageView>(R.id.item_thumbnail)
         vTitle.text = item.title
         vDesc.text = item.description.toSpanned()
-        vPubDate.text = item.pubDate
+        vPubDate.text = convertDate(item.pubDate)
 
         Picasso.with(vThumb.context).load(item.thumbnail).into(vThumb)
 
@@ -180,6 +160,7 @@ class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 }
 
+
 fun String.toSpanned(): Spanned {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         return Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
@@ -187,4 +168,13 @@ fun String.toSpanned(): Spanned {
         @Suppress("DEPRECATION")
         return Html.fromHtml(this)
     }
+}
+
+//2018-12-29 13:43:38 -> 29.12.2018 13:43
+fun convertDate(dateRaw: String) : String {
+    val date =  dateRaw.substring(0, dateRaw.length-3)
+    val dateTime = date.split(" ")
+    val yearMonthDay = dateTime[0].split("-")
+    return yearMonthDay[2] + "-" + yearMonthDay[1] + "-" + yearMonthDay[0] + " " + dateTime[1]
+
 }
