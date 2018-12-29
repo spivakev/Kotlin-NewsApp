@@ -33,6 +33,13 @@ class MainActivity : Activity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (fragmentManager.backStackEntryCount == 0) {
+            findViewById<View>(R.id.fragment_place2).visibility = View.GONE
+        }
+    }
+
     fun showArticle(url: String) {
         val bundle = Bundle()
         bundle.putString("url", url)
@@ -146,7 +153,7 @@ class RecHolder(view: View) : RecyclerView.ViewHolder(view) {
         val vThumb = itemView.findViewById<ImageView>(R.id.item_thumbnail)
         vTitle.text = item.title
         vDesc.text = item.description.toSpanned()
-        vPubDate.text = convertDate(item.pubDate)
+        vPubDate.text = formatDate(item.pubDate)
 
         Picasso.with(vThumb.context).load(item.thumbnail).into(vThumb)
 
@@ -171,7 +178,7 @@ fun String.toSpanned(): Spanned {
 }
 
 //2018-12-29 13:43:38 -> 29.12.2018 13:43
-fun convertDate(dateRaw: String) : String {
+fun formatDate(dateRaw: String) : String {
     val date =  dateRaw.substring(0, dateRaw.length-3)
     val dateTime = date.split(" ")
     val yearMonthDay = dateTime[0].split("-")

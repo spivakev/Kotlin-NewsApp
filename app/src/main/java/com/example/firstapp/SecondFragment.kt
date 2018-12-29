@@ -1,7 +1,9 @@
 package com.example.firstapp
 
 import android.app.Fragment
+import android.content.res.Configuration
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,15 +14,13 @@ import android.webkit.WebView
 class SecondFragment: Fragment() {
 
     lateinit var url: String
-    lateinit var vBrowser: WebView // WebView - браузер
+    lateinit var vBrowser: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val vRecView = activity.findViewById<RecyclerView>(R.id.act1_recView)
-        vRecView.layoutManager = null
         vRecView.layoutManager = LinearLayoutManager(activity)
-
 
         url = arguments.getString("url")
     }
@@ -37,5 +37,13 @@ class SecondFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         vBrowser.loadUrl(url)
+    }
+
+    override fun onDestroy() {
+        if (fragmentManager.backStackEntryCount == 0) {
+            val vRecView = activity.findViewById<RecyclerView>(R.id.act1_recView)
+            vRecView.layoutManager = GridLayoutManager(activity, 2)
+        }
+        super.onDestroy()
     }
 }
